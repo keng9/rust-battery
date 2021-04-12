@@ -1,13 +1,13 @@
 //! Platform-specific types are required to implement the following traits.
 
 use std::fmt::Debug;
-use std::rc::Rc;
 
 use num_traits::identities::Zero;
 use uom::si::time::{day, hour};
 
 use crate::units::{Bound, ElectricPotential, Energy, Power, Ratio, ThermodynamicTemperature, Time};
 use crate::{Result, State, Technology};
+use std::sync::Arc;
 
 pub trait BatteryManager: Debug + Sized {
     type Iterator: BatteryIterator;
@@ -27,7 +27,7 @@ pub trait BatteryIterator: Iterator<Item = Result<<Self as BatteryIterator>::Dev
     ///
     /// Implemented `next()` for `<Self as Iterator>` must preload all needed battery data
     /// in this method, because `BatteryDevice` methods are infallible.
-    fn new(manager: Rc<Self::Manager>) -> Result<Self>;
+    fn new(manager: Arc<Self::Manager>) -> Result<Self>;
 }
 
 /// Underline type for `Battery`, different for each supported platform.

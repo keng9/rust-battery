@@ -7,7 +7,7 @@ use crate::platform::traits::BatteryIterator;
 use crate::Result;
 
 pub struct IoCtlIterator {
-    manager: Rc<IoCtlManager>,
+    manager: Arc<IoCtlManager>,
     range: Range<libc::c_int>,
 }
 
@@ -46,7 +46,7 @@ impl BatteryIterator for IoCtlIterator {
     type Manager = IoCtlManager;
     type Device = IoCtlDevice;
 
-    fn new(manager: Rc<Self::Manager>) -> Result<Self> {
+    fn new(manager: Arc<Self::Manager>) -> Result<Self> {
         let batteries = manager.count()?;
 
         Ok(Self {

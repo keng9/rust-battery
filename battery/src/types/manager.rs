@@ -1,10 +1,10 @@
 use std::fmt;
-use std::rc::Rc;
 
 use crate::platform::traits::*;
 use crate::platform::Iterator as PlatformIterator;
 use crate::platform::Manager as PlatformManager;
 use crate::{Batteries, Battery, Result};
+use std::sync::Arc;
 
 /// Manager for batteries available in system.
 ///
@@ -24,7 +24,7 @@ use crate::{Batteries, Battery, Result};
 ///
 /// [batteries]: struct.Battery.html
 pub struct Manager {
-    inner: Rc<PlatformManager>,
+    inner: Arc<PlatformManager>,
 }
 
 impl Manager {
@@ -33,7 +33,7 @@ impl Manager {
         let inner = PlatformManager::new()?;
 
         Ok(Manager {
-            inner: Rc::new(inner),
+            inner: Arc::new(inner),
         })
     }
 
